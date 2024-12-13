@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import ReactQueryProvider from "@/src/providers/query-providers";
-import "@/src/styles/globals.css";
+import GlobalProvider from "@/providers";
+import "@/styles/styles.scss";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,9 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl">
-      <body className={"antialiased"}>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+    <html lang="en">
+      <body className={"min-h-screen"}>
+        <GlobalProvider>{children}</GlobalProvider>
       </body>
     </html>
   );

@@ -19,8 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
-      "@/atoms": ["./src/components/ui/atoms/*"]
+      "@/*": ["./src/*"],
+      "@/atoms/*": ["./src/components/ui/atoms/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

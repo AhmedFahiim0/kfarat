@@ -1,16 +1,23 @@
-interface TPagination {
-  page: number;
-  total: number;
-  limit: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-}
-
-interface TRoute {
+interface TProduct {
+  id: string;
+  category: string;
+  type: string;
   name: string;
-  path: string;
-  icon?: ForwardRefExoticComponent<
-    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
-  >;
-
-  sub_routes?: TRoute[];
+  gender: string;
+  new: boolean;
+  sale: boolean;
+  rate: number;
+  price: number;
+  originPrice: number;
+  brand: string;
+  sold: number;
+  quantity: number;
+  quantityPurchase: number;
+  sizes: Array<string>;
+  variation: Variation[];
+  thumbImage: Array<string>;
+  images: Array<string>;
+  description: string;
+  action: string;
+  slug: string;
 }

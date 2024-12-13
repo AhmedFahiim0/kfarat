@@ -1,0 +1,24 @@
+.custom-toast-container {
+    .Toastify__toast {
+      font-family: 'Instrument Sans', sans-serif;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  
+    .custom-toast-success {
+      background-color: #4caf50;
+    }
+  
+    .custom-toast-error {
+      background-color: #f44336;
+    }
+  
+    .custom-toast-info {
+      background-color: #2196f3;
+    }
+  
+    .custom-toast-warn {
+      background-color: #ff9800;
+    }
+  }
+  
