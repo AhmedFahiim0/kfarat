@@ -1,33 +1,21 @@
-import React, { useState, useMemo } from "react";
+import React from "react";
 import Image from "next/image";
 import { ChevronDown, X, Search, ChevronRight, Map } from "lucide-react";
+import { useCitiesActions } from "./use-city-actions";
+import { useTranslations } from "next-intl";
 
 const SaudiCitySelector = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const t = useTranslations();
 
-  const saudiCities = [
-    "Riyadh",
-    "Jeddah",
-    "Mecca",
-    "Medina",
-    "Dammam",
-    "Taif",
-    "Tabuk",
-    "Abha",
-    "Al Khobar",
-    "Buraidah",
-    "Khamis Mushait",
-    "Qatif",
-  ];
-
-  const filteredCities = useMemo(
-    () =>
-      saudiCities.filter((city) =>
-        city.toLowerCase().includes(searchTerm.toLowerCase())
-      ),
-    [saudiCities, searchTerm]
-  );
+  const {
+    searchTerm,
+    isModalOpen,
+    currentRagion,
+    filteredCities,
+    onSelectRegion,
+    setSearchTerm,
+    setIsModalOpen,
+  } = useCitiesActions();
 
   return (
     <>
@@ -44,10 +32,12 @@ const SaudiCitySelector = () => {
         />
         <div className="flex flex-col">
           <div className="flex items-center gap-1">
-            <span className="text-sm text-gray-600">City</span>
+            <span className="text-sm text-gray-600">{t("city")}</span>
             <ChevronDown className="w-4 text-gray-500" />
           </div>
-          <div className="font-semibold text-base text-gray-800">Riyadh</div>
+          <div className="font-semibold text-base text-gray-800 capitalize">
+            {currentRagion?.region?.city}
+          </div>
         </div>
       </div>
 
@@ -55,7 +45,9 @@ const SaudiCitySelector = () => {
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center ">
           <div className="bg-white rounded-lg w-11/12 max-w-md max-h-[80vh] overflow-y-auto p-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">Chose City</h2>
+              <h2 className="text-2xl font-bold text-gray-800">
+                {t("choose_city")}
+              </h2>
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="text-gray-600 hover:text-gray-900"
@@ -80,19 +72,18 @@ const SaudiCitySelector = () => {
 
             {/* Cities in Column Layout */}
             <div className="flex flex-col ">
-              {filteredCities.length > 0 ? (
-                filteredCities.map((city) => (
+              {filteredCities?.length > 0 ? (
+                filteredCities?.map((city: TCity, idx: number) => (
                   <button
-                    key={city}
+                    key={idx}
                     onClick={() => {
-                      // Logic to select city would go here
-                      setIsModalOpen(false);
+                      onSelectRegion(city);
                     }}
                     className="flex justify-between p-3 bg-gray-100 hover:bg-secfill transition-colors text-left w-full border-b border-1/2 border-line"
                   >
                     <div className="flex gap-5 items-center">
                       <Map size={16} className="text-secondary" />
-                      <span>{city}</span>
+                      <span>{city.name}</span>
                     </div>
                     <ChevronRight className="text-line" />
                   </button>

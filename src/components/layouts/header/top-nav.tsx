@@ -14,9 +14,13 @@ const TopNav: React.FC<Props> = () => {
   const t = useTranslations();
 
   const router = useRouter();
+
   const pathname = usePathname();
+
   const params = useParams();
+
   const searchParams = useSearchParams();
+
   const locale = useLocale();
 
   function onSelectChange() {

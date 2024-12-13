@@ -10,6 +10,7 @@ import { ModalQuickviewProvider } from "@/context/ModalQuickviewContext";
 import LanguageProvier from "./language-provider";
 import ReactQueryProvider from "./query-providers";
 import LayoutProvider from "@/components/layouts";
+import RegionProvider from "./region-provider";
 
 const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -25,7 +26,9 @@ const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
                   <ModalCompareProvider>
                     <ModalSearchProvider>
                       <ModalQuickviewProvider>
-                        <LayoutProvider>{children}</LayoutProvider>
+                        <RegionProvider>
+                          <LayoutProvider>{children}</LayoutProvider>
+                        </RegionProvider>
                       </ModalQuickviewProvider>
                     </ModalSearchProvider>
                   </ModalCompareProvider>

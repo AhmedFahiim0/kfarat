@@ -1,48 +1,35 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import * as Icon from "@phosphor-icons/react/dist/ssr";
-import { usePathname } from "next/navigation";
 import Product from "@/components/ui/molecule/Product";
 import productData from "@/data/Product.json";
-import useMenuMobile from "@/store/useMenuMobile";
-import { useModalCartContext } from "@/context/ModalCartContext";
-import { useModalWishlistContext } from "@/context/ModalWishlistContext";
-import { useModalSearchContext } from "@/context/ModalSearchContext";
-import { useCart } from "@/context/CartContext";
-import { useRouter } from "next/navigation";
 // import PhoneLoginModal from "@/components/Modal/PhoneLoginModel";
-import { batteriesCategory, tiresCategory } from "@/data/categories";
+import { tiresCategory } from "@/data/categories";
 import SaudiCitySelector from "@/components/ui/atoms/country-selector";
 import { cn } from "@/utils/functions/conditional-classes";
 import { useTranslations } from "next-intl";
+import { useBarActions } from "./use-bar-actions";
 
 const AppBar = () => {
   const t = useTranslations();
 
-  const pathname = usePathname();
-
-  const router = useRouter();
-
-  const { openMenuMobile, handleMenuMobile } = useMenuMobile();
-
-  const { openModalCart } = useModalCartContext();
-
-  const { cartState } = useCart();
-
-  const { openModalWishlist } = useModalWishlistContext();
-
-  const { openModalSearch } = useModalSearchContext();
-
-  const [fixedHeader, setFixedHeader] = useState(false);
-
-  const [lastScrollPosition, setLastScrollPosition] = useState(0);
-
-  const handleTypeClick = (type: string) => {
-    router.push(`/shop/breadcrumb1?type=${type}`);
-  };
+  const {
+    pathname,
+    cartState,
+    fixedHeader,
+    openMenuMobile,
+    lastScrollPosition,
+    openModalCart,
+    setFixedHeader,
+    handleTypeClick,
+    openModalSearch,
+    handleMenuMobile,
+    openModalWishlist,
+    setLastScrollPosition,
+  } = useBarActions();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,10 +38,8 @@ const AppBar = () => {
       setLastScrollPosition(scrollPosition);
     };
 
-    // Gắn sự kiện cuộn khi component được mount
     window.addEventListener("scroll", handleScroll);
 
-    // Hủy sự kiện khi component bị unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };

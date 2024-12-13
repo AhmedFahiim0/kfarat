@@ -21,3 +21,9 @@ interface TProduct {
   action: string;
   slug: string;
 }
+
+interface TCity {
+  coordinates: { lat: number; lng: number };
+  name: string;
+  area: { country: { name: string } };
+}
