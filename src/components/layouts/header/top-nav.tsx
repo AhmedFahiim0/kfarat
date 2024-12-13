@@ -4,13 +4,27 @@ import React from "react";
 import * as Icon from "@phosphor-icons/react/dist/ssr";
 import { X } from "lucide-react";
 import { SnapchatLogo, TiktokLogo } from "@phosphor-icons/react";
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { useParams, useSearchParams } from "next/navigation";
 
 interface Props {}
 
 const TopNav: React.FC<Props> = () => {
   const t = useTranslations();
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const params = useParams();
+  const searchParams = useSearchParams();
+  const locale = useLocale();
+
+  function onSelectChange() {
+    // @ts-expect-error -- TypeScript will validate that only known `params`
+    // are used in combination with a given `pathname`. Since the two will
+    // always match for the current route, we can skip runtime checks.
+    router.replace({ pathname, params, query: searchParams }, { locale });
+  }
 
   return (
     <>

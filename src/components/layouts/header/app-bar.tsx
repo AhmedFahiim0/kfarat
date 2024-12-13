@@ -7,40 +7,42 @@ import * as Icon from "@phosphor-icons/react/dist/ssr";
 import { usePathname } from "next/navigation";
 import Product from "@/components/ui/molecule/Product";
 import productData from "@/data/Product.json";
-import useLoginPopup from "@/store/useLoginPopup";
 import useMenuMobile from "@/store/useMenuMobile";
 import { useModalCartContext } from "@/context/ModalCartContext";
 import { useModalWishlistContext } from "@/context/ModalWishlistContext";
 import { useModalSearchContext } from "@/context/ModalSearchContext";
 import { useCart } from "@/context/CartContext";
-import { useWishlist } from "@/context/WishlistContext";
 import { useRouter } from "next/navigation";
 // import PhoneLoginModal from "@/components/Modal/PhoneLoginModel";
-import {
-  batteriesCategory,
-  oilCategory,
-  roadCategory,
-  tiresCategory,
-} from "@/data/categories";
+import { batteriesCategory, tiresCategory } from "@/data/categories";
 import SaudiCitySelector from "@/components/ui/atoms/country-selector";
+import { cn } from "@/utils/functions/conditional-classes";
+import { useTranslations } from "next-intl";
 
 const AppBar = () => {
+  const t = useTranslations();
+
   const pathname = usePathname();
+
   const router = useRouter();
-  const { openLoginPopup, handleLoginPopup } = useLoginPopup();
+
   const { openMenuMobile, handleMenuMobile } = useMenuMobile();
-  const [openSubNavMobile, setOpenSubNavMobile] = useState<number | null>(null);
+
   const { openModalCart } = useModalCartContext();
+
   const { cartState } = useCart();
+
   const { openModalWishlist } = useModalWishlistContext();
+
   const { openModalSearch } = useModalSearchContext();
 
-  const handleOpenSubNavMobile = (index: number) => {
-    setOpenSubNavMobile(openSubNavMobile === index ? null : index);
-  };
-
   const [fixedHeader, setFixedHeader] = useState(false);
+
   const [lastScrollPosition, setLastScrollPosition] = useState(0);
+
+  const handleTypeClick = (type: string) => {
+    router.push(`/shop/breadcrumb1?type=${type}`);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,18 +59,6 @@ const AppBar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [lastScrollPosition]);
-
-  const handleGenderClick = (gender: string) => {
-    router.push(`/shop/breadcrumb1?gender=${gender}`);
-  };
-
-  const handleCategoryClick = (category: string) => {
-    router.push(`/shop/breadcrumb1?category=${category}`);
-  };
-
-  const handleTypeClick = (type: string) => {
-    router.push(`/shop/breadcrumb1?type=${type}`);
-  };
 
   return (
     <>
@@ -106,14 +96,12 @@ const AppBar = () => {
                 <li className="h-full relative">
                   <Link
                     href="#!"
-                    className={`text-button-uppercase duration-300 h-full flex items-center justify-center gap-1 
-                                            ${
-                                              pathname?.includes("/")
-                                                ? "active text-black"
-                                                : ""
-                                            }`}
+                    className={cn(
+                      "text-button-uppercase duration-300 h-full flex items-center justify-center gap-1",
+                      { "active text-black": pathname?.includes("/") }
+                    )}
                   >
-                    Home
+                    {t("home")}
                   </Link>
                 </li>
 
@@ -123,7 +111,7 @@ const AppBar = () => {
                     href="#!"
                     className="text-button-uppercase duration-300 h-full flex items-center justify-center"
                   >
-                    Catgory
+                    {t("category")}
                   </Link>
                   <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
                     <div className="container">
@@ -146,13 +134,8 @@ const AppBar = () => {
                               ))}
                             </ul>
                           </div>
-                          <div className="nav-item">
-                            <div className="text-button-uppercase pb-2">
-                              {batteriesCategory.title}
-                            </div>
-                          </div>
                         </div>
-
+                        {/* ads block */}
                         <div className="banner-ads-block pl-2.5 basis-1/3">
                           <div
                             className="banner-ads-item bg-linear rounded-2xl relative overflow-hidden cursor-pointer"
@@ -179,31 +162,6 @@ const AppBar = () => {
                               className="basis-1/3 absolute right-0 top-0 duration-700"
                             />
                           </div>
-                          <div
-                            className="banner-ads-item bg-linear rounded-2xl relative overflow-hidden cursor-pointer mt-8"
-                            onClick={() => handleTypeClick("accessories")}
-                          >
-                            <div className="text-content py-14 pl-8 relative z-[1]">
-                              <div className="text-button-uppercase text-white bg-red px-2 py-0.5 inline-block rounded-sm">
-                                Save $10
-                              </div>
-                              <div className="heading6 mt-2">
-                                20% off <br />
-                                accessories
-                              </div>
-                              <div className="body1 mt-3 text-secondary">
-                                Starting at{" "}
-                                <span className="text-red">$59.99</span>
-                              </div>
-                            </div>
-                            <Image
-                              src={"/images/other/bg-feature.png"}
-                              width={200}
-                              height={100}
-                              alt="bg-img"
-                              className="basis-1/3 absolute right-0 top-0 duration-700"
-                            />
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -216,7 +174,7 @@ const AppBar = () => {
                     href="#!"
                     className="text-button-uppercase duration-300 h-full flex items-center justify-center"
                   >
-                    Deals
+                    {t("deals")}
                   </Link>
 
                   <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
@@ -264,7 +222,7 @@ const AppBar = () => {
                     href="#!"
                     className="text-button-uppercase duration-300 h-full flex items-center justify-center"
                   >
-                    Help and advice{" "}
+                    {t("help_and_advice")}
                   </Link>
                   <div className="sub-menu py-3 px-5 -left-10 absolute bg-white rounded-b-xl">
                     <ul className="w-full">
@@ -278,46 +236,6 @@ const AppBar = () => {
                           Blog Default
                         </Link>
                       </li>
-                      <li>
-                        <Link
-                          href="/blog/list"
-                          className={`text-secondary duration-300 ${
-                            pathname === "/blog/list" ? "active" : ""
-                          }`}
-                        >
-                          Blog List
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/blog/grid"
-                          className={`text-secondary duration-300 ${
-                            pathname === "/blog/grid" ? "active" : ""
-                          }`}
-                        >
-                          Blog Grid
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/blog/detail1"
-                          className={`text-secondary duration-300 ${
-                            pathname === "/blog/detail1" ? "active" : ""
-                          }`}
-                        >
-                          Blog Detail 1
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/blog/detail2"
-                          className={`text-secondary duration-300 ${
-                            pathname === "/blog/detail2" ? "active" : ""
-                          }`}
-                        >
-                          Blog Detail 2
-                        </Link>
-                      </li>
                     </ul>
                   </div>
                 </li>
@@ -328,7 +246,7 @@ const AppBar = () => {
                     href="/pages/about"
                     className="text-button-uppercase duration-300 h-full flex items-center justify-center "
                   >
-                    About Us
+                    {t("about_us")}
                   </Link>
                 </li>
               </ul>

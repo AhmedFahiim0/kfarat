@@ -1,1 +1,10 @@
-{ "about": "About", "contact": "Contact", "faqs": "FAQS" }
+{
+  "about": "About",
+  "contact": "Contact",
+  "faqs": "FAQS",
+  "home": "Home",
+  "about_us": "About Us",
+  "help_and_advice": "Help And Advice",
+  "category": "Category",
+  "deals": "Deals"
+}
