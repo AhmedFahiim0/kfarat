@@ -9,7 +9,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css/bundle";
 import "swiper/css/effect-fade";
 
-const SliderEleven = () => {
+const LastChance = () => {
   const router = useRouter();
 
   const handleTypeClick = (type: string) => {
@@ -219,4 +219,4 @@ const SliderEleven = () => {
   );
 };
 
-export default SliderEleven;
+export default LastChance;

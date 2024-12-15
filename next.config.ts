@@ -5,7 +5,15 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   /* config options here */
-  devIndicators: {},
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "kafaratplus-api-prod.tecfy.co",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default withNextIntl(nextConfig);
