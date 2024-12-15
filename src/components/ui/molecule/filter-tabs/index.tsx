@@ -13,7 +13,7 @@ export default function FilterTabs({ tabs, activeTab, onTabClick }: Props) {
       key={idx}
       activeTab={activeTab}
       tab={type}
-      handleTabClick={() => onTabClick(type.id)}
+      handleTabClick={() => onTabClick(type.name)}
     />
   ));
 }
